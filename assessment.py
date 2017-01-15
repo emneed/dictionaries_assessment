@@ -217,7 +217,39 @@ def kids_game(names):
     good solutions here will definitely require a dictionary.
     """
 
-    return []
+    words_by_first_letter = {}
+    word_list = []
+
+    # Builds the dict excluding the first word bc it automatically gets added
+    for word in names[1:]:
+        if word[0] in words_by_first_letter.keys():
+            words_by_first_letter[word[0]].append(word)
+        else:
+            words_by_first_letter[word[0]] = [word]
+
+    # Adds the first word to the return list and grabs the last letter
+    word_list.append(names[0])
+    new_letter = names[0][-1]
+
+    # Loops until either a Key or Index error is raised, finding the first word
+    # that begins with the correct letter, adding it, then removing it so it 
+    # can't be used again
+    while True:
+        try:
+            new_word = words_by_first_letter[new_letter][0]
+            word_list.append(new_word)
+            words_by_first_letter[new_letter].remove(new_word)
+            new_letter = word_list[-1][-1]
+
+        # Catches when a word ends with a letter that no word left starts with
+        except KeyError:
+            return word_list
+
+        # Catches when the key exists, but all words starting with the key have
+        # been used (leaving an empty list behind)
+        except IndexError:
+            return word_list
+
 
 #####################################################################
 # You can ignore everything below this.

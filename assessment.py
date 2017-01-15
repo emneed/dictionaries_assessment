@@ -3,6 +3,8 @@
 **IMPORTANT:** These problems are meant to be solved using
 dictionaries and sets.
 """
+import string
+
 
 def count_words(phrase):
     """Count unique words in a string.
@@ -29,7 +31,21 @@ def count_words(phrase):
         {'Porcupine': 1, 'do.': 1, 'porcupine': 1, 'see,': 1}
     """
 
-    return {}
+    unique_words = {}
+
+    for word in phrase.split():
+
+        # Useful for edge cases, but breaks doctest so commented out
+        #word = word.lower() #Eliminates double counting for capitalization
+        #word = word.translate(None, string.punctuation) #Removes punctuation
+
+        # If the word has already been seen in the phrase, increment count
+        if word in unique_words.keys():
+            unique_words[word] += 1
+        else: # otherwise, add the key to the dictionary with value 1
+            unique_words[word] = 1
+
+    return unique_words
 
 
 def get_melon_price(melon_name):
@@ -54,7 +70,13 @@ def get_melon_price(melon_name):
         'No price found'
     """
 
-    return 0
+    melon_prices = {"Watermelon": 2.95, "Cantaloupe": 2.50,
+                    "Musk": 3.25, "Christmas": 14.25}
+    
+    try:
+        return melon_prices[melon_name]
+    except KeyError:
+        return "No price found"
 
 
 def word_length_sorted(words):
@@ -76,7 +98,7 @@ def word_length_sorted(words):
         [(2, ['ok']), (9, ['porcupine'])]
     """
 
-    return []
+    
 
 
 def translate_to_pirate_talk(phrase):
